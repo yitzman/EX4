@@ -10,17 +10,20 @@
 template <typename T>
 class BestFirstSearch : public Searcher<T> {
 private:
-    unordered_map<T, string> m_map_color;
+
     //unordered_map<T, int> m_map_distance;
     //queue<State<T>> q2;
 
-    int m_num_of_nodes_visited = 0;
 public:
     State<T> search(Searcheable<T>& searcheable);
+    Searcher<T>* clone() override;
 };
 
 template<typename T>
 State<T> BestFirstSearch<T>::search(Searcheable<T> &searcheable) {
+    unordered_map<T, string> m_map_color;
+    int m_num_of_nodes_visited = 0;
+
     auto compare = [](State<string>& s1, State<string>& s2) -> bool
     {
         return s1 > s2;
@@ -30,7 +33,7 @@ State<T> BestFirstSearch<T>::search(Searcheable<T> &searcheable) {
     m_map_color[searcheable.getInitialState().getState()] = "g";
     searcheable.getInitialState().setDistance(0);
     q.push(searcheable.getInitialState());
-    m_num_of_nodes_visited++;
+    //m_num_of_nodes_visited++;
     while (!q.empty()) {
         State<T> u = q.top();
         q.pop();
@@ -39,7 +42,6 @@ State<T> BestFirstSearch<T>::search(Searcheable<T> &searcheable) {
         }
         m_map_color[u.getState()] = "b";
         m_num_of_nodes_visited++;
-        cout<<q.size()<<",";
         vector<State<T>*>& vec = searcheable.getAllPossiableStates(u);
         for (State<T>*& vt : vec) {
             State<T>& v = *vt;
@@ -53,13 +55,19 @@ State<T> BestFirstSearch<T>::search(Searcheable<T> &searcheable) {
                 }
             }
             if (searcheable.isGoalState(u)) {
-                cout<<endl;
+                //cout<<endl;
                 cout<<m_num_of_nodes_visited<<endl;
                 return u;
             }
         }
 
     }
+    return searcheable.getInitialState();
+}
+
+template<typename T>
+Searcher<T> *BestFirstSearch<T>::clone() {
+    return new BestFirstSearch<T>;
 }
 
 

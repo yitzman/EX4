@@ -11,16 +11,19 @@ using namespace std;
 template <typename T>
 class Astar : public Searcher<T>{
 private:
-    unordered_map<T, string> m_map_color;
-    int m_num_of_nodes_visited = 0;
+
 
 public:
+    Astar();
     State<T> search(Searcheable<T>& searcheable);
+    Searcher<T>* clone();
 };
 
 template<typename T>
 State<T> Astar<T>::search(Searcheable<T> &searcheable) {
 
+    unordered_map<T, string> m_map_color;
+    int m_num_of_nodes_visited = 0;
     auto compare = [](State<string>& s1, State<string>& s2) -> bool
     {
         return s1 > s2;
@@ -30,7 +33,7 @@ State<T> Astar<T>::search(Searcheable<T> &searcheable) {
     m_map_color[searcheable.getInitialState().getState()] = "g";
     searcheable.getInitialState().setDistance(0);
     q.push(searcheable.getInitialState());
-    m_num_of_nodes_visited++;
+    //m_num_of_nodes_visited++;
     while (!q.empty()) {
         State<T> u = q.top();
         q.pop();
@@ -39,7 +42,7 @@ State<T> Astar<T>::search(Searcheable<T> &searcheable) {
         }
         m_map_color[u.getState()] = "b";
         m_num_of_nodes_visited++;
-        cout<<q.size()<<",";
+        //cout<<q.size()<<",";
         vector<State<T>*>& vec = searcheable.getAllPossiableStates(u);
         for (State<T>*& vt : vec) {
             State<T>& v = *vt;
@@ -60,6 +63,14 @@ State<T> Astar<T>::search(Searcheable<T> &searcheable) {
         }
 
     }
+}
+
+template<typename T>
+Astar<T>::Astar() : Searcher<T>(){}
+
+template<typename T>
+Searcher<T> *Astar<T>::clone() {
+    return new Astar<T>;
 }
 
 

@@ -9,6 +9,8 @@
 class ClientHandler {
 public:
     virtual int handleClient(int input) = 0;
+    virtual ClientHandler* clone() = 0;
+    virtual ~ClientHandler() {};
 };
 
 
