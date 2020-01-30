@@ -14,6 +14,6 @@ Yitzi Jacobs 333991271, Avi Fraind 311519441
     2)Copy following command in terminal : g++ -std=c++14 *.cpp -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -o a.out -pthread
     3)All files required are in the main folder.
 ### One More Thing
-   In the main.cpp file you can choose which algorithim to run. We have BestFS running while the other four are in a comment. To switch, just remove the one you want from the omment and put the last one back into a comment. In order to run AStar you will also need to go into OA.cpp and and put line 84 in a comment and remove line 83 from the comment.
+   In the main.cpp file you can choose which algorithim to run. We have BestFS running while the other three are in a comment. To switch, just remove the one you want from the omment and put the last one back into a comment. In order to run AStar you will also need to go into OA.cpp and and put line 84 in a comment and remove line 83 from the comment.
 ### GitHub Project Link
         https://github.com/yitzman/EX4
